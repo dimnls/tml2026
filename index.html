@@ -10,16 +10,38 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'Inter',sans-serif;overflow:hidden}
-.topnav{display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:56px;background:#0d0a1a;border-bottom:1px solid #2a2040;flex-shrink:0;z-index:10;position:relative}
-.topnav-brand{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:#c084fc;white-space:nowrap}
+
+/* ── TOP NAV ── */
+.topnav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;height:56px;
+  background:#0d0a1a;border-bottom:1px solid #2a2040;
+  flex-shrink:0;z-index:10;position:relative;
+}
+.topnav-brand{
+  font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;
+  color:#c084fc;white-space:nowrap;
+}
 .topnav-brand span{color:#6b5fa0;font-size:16px;letter-spacing:1px;margin-left:8px}
 .topnav-tabs{display:flex;gap:4px}
-.tab-btn{background:transparent;border:1px solid transparent;border-radius:8px;padding:8px 20px;font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1px;color:#5a4f7a;cursor:pointer;transition:color 0.2s,background 0.2s,border-color 0.2s;white-space:nowrap}
+.tab-btn{
+  background:transparent;border:1px solid transparent;
+  border-radius:8px;padding:8px 20px;
+  font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1px;
+  color:#5a4f7a;cursor:pointer;transition:color 0.2s,background 0.2s,border-color 0.2s;
+  white-space:nowrap;
+}
 .tab-btn:hover{color:#9b7fff;background:#13102a}
 .tab-btn.active{color:#e8d9ff;background:#13102a;border-color:#2a2040}
+
+/* ── CONTENT WRAPPER ── */
 .app{width:100vw;height:calc(100vh - 56px);overflow:hidden;position:relative}
 .view{width:100%;height:100%;display:none;flex-direction:column;overflow:hidden}
 .view.active{display:flex}
+
+/* ════════════════════════════════════════════
+   PRESENTATION
+════════════════════════════════════════════ */
 .slides-viewport{flex:1;overflow:hidden;position:relative}
 .slides-track{display:flex;height:100%;transition:transform 0.55s cubic-bezier(0.77,0,0.175,1)}
 .slide{min-width:100%;height:100%;padding:2.5rem 4rem 1.5rem;display:flex;flex-direction:column;gap:1rem;overflow-y:auto}
@@ -66,6 +88,7 @@ html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'I
 .big-num{font-family:'Bebas Neue',sans-serif;font-size:72px;color:#c084fc;line-height:1;flex-shrink:0}
 .big-label{font-size:19px;font-weight:500;color:#e8d9ff;margin-bottom:5px}
 .big-sub{font-size:16px;color:#7c6fa0}
+.intro-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:0.5rem}
 .intro-card{background:#13102a;border:1px solid #2a2040;border-radius:14px;padding:1.25rem 1.5rem}
 .ic-num{font-family:'Bebas Neue',sans-serif;font-size:52px;color:#c084fc;line-height:1;margin-bottom:4px}
 .ic-label{font-size:16px;color:#6b5fa0}
@@ -80,6 +103,10 @@ html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'I
 .slide-counter{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:#6b5fa0}
 .animate-in{opacity:0;transform:translateY(18px);transition:opacity 0.45s ease,transform 0.45s ease}
 .animate-in.visible{opacity:1;transform:translateY(0)}
+
+/* ════════════════════════════════════════════
+   SHARED GAME STYLES
+════════════════════════════════════════════ */
 .gscreen{width:100%;height:100%;display:none;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 4rem;text-align:center}
 .gscreen.active{display:flex}
 .gscreen-scroll{width:100%;height:100%;display:none;flex-direction:column;align-items:flex-start;padding:2.5rem 4rem;overflow-y:auto;text-align:left}
@@ -96,12 +123,16 @@ html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'I
 .g-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(46px,5.5vw,76px);color:#fff;line-height:1;margin-bottom:0.2rem;flex-shrink:0}
 .g-name span{color:#c084fc}
 .g-prompt{font-size:17px;color:#7c6fa0;font-style:italic;margin-bottom:1.5rem;flex-shrink:0}
+
+/* squad grid for lobby screens */
 .squad-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%;max-width:780px;margin-bottom:2rem}
 .squad-btn{background:#13102a;border:1px solid #2a2040;border-radius:12px;padding:1.1rem 0.75rem;cursor:pointer;transition:background 0.2s,border-color 0.2s,transform 0.15s;text-align:center}
 .squad-btn:hover{background:#1e1730;border-color:#9b7fff;transform:translateY(-2px)}
 .squad-btn .sb-name{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#e8d9ff;display:block}
 .squad-btn .sb-from{font-size:15px;color:#5a4f7a;margin-top:2px}
 .squad-btn.done{opacity:0.35;cursor:default;pointer-events:none}
+
+/* guess grid */
 .guess-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;width:100%;margin-bottom:1.25rem;flex-shrink:0}
 .guess-btn{background:#13102a;border:1px solid #2a2040;border-radius:10px;padding:12px 16px;cursor:pointer;font-family:'Inter',sans-serif;font-size:16px;color:#c4b0f0;transition:background 0.2s,border-color 0.2s;text-align:left}
 .guess-btn:hover{background:#1e1730;border-color:#9b7fff}
@@ -109,6 +140,8 @@ html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'I
 .guess-btn.disabled{pointer-events:none}
 .guess-btn.correct,.guess-btn.reveal-correct{background:#0f2a1a;border-color:#1a5a30;color:#5eead4}
 .guess-btn.wrong{background:#2a1010;border-color:#5a1a1a;color:#f87171;opacity:0.5}
+
+/* action buttons */
 .confirm-btn{background:#7c3aed;border:none;border-radius:10px;padding:14px 36px;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:#fff;cursor:pointer;transition:background 0.2s,transform 0.1s;margin-bottom:1.5rem;flex-shrink:0}
 .confirm-btn:hover{background:#9b55ff}
 .confirm-btn:active{transform:scale(0.97)}
@@ -120,8 +153,14 @@ html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'I
 .next-btn:hover{background:#1e1730;border-color:#9b7fff}
 .restart-btn{background:#13102a;border:1px solid #2a2040;border-radius:10px;padding:14px 36px;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:#c084fc;cursor:pointer;transition:background 0.2s}
 .restart-btn:hover{background:#1e1730}
+
+/* reveal transitions */
 .reveal-section{width:100%;opacity:0;transform:translateY(14px);transition:opacity 0.4s ease,transform 0.4s ease;flex-shrink:0}
 .reveal-section.visible{opacity:1;transform:translateY(0)}
+
+/* ════════════════════════════════════════════
+   GAME 1 — WHO GOT VOTED
+════════════════════════════════════════════ */
 .vote-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:1.25rem}
 .vote-row{background:#13102a;border:1px solid #2a2040;border-radius:10px;padding:11px 16px;display:flex;align-items:center;gap:14px;opacity:0;transform:translateX(-12px);transition:opacity 0.35s ease,transform 0.35s ease}
 .vote-row.visible{opacity:1;transform:translateX(0)}
@@ -136,6 +175,10 @@ html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'I
 .match-banner.yes{background:#0f2a1a;border:1px solid #1a5a30;color:#5eead4}
 .match-banner.no{background:#2a100a;border:1px solid #5a1a1a;color:#f87171}
 .reveal-label{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#6b5fa0;margin-bottom:0.75rem}
+
+/* ════════════════════════════════════════════
+   GAME 2 — WHO SAID IT
+════════════════════════════════════════════ */
 .card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%;max-width:780px;margin-bottom:2rem}
 .person-card{background:#13102a;border:1px solid #2a2040;border-radius:14px;padding:1.1rem 0.75rem;cursor:pointer;transition:background 0.2s,border-color 0.2s,transform 0.15s;position:relative;overflow:hidden;text-align:center}
 .person-card:hover{background:#1e1730;border-color:#9b7fff;transform:translateY(-3px)}
@@ -169,6 +212,7 @@ html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'I
 </head>
 <body>
 
+<!-- TOP NAV -->
 <nav class="topnav">
   <div class="topnav-brand">TML 2026 <span>SQUAD HQ · July 16–20 · Boom</span></div>
   <div class="topnav-tabs">
@@ -180,6 +224,7 @@ html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'I
 
 <div class="app">
 
+<!-- ════════ PRESENTATION ════════ -->
 <div class="view active" id="view-pres">
   <div class="slides-viewport">
     <div class="slides-track" id="pres-track">
@@ -351,7 +396,7 @@ html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'I
             <div class="artist-card"><div class="ac-name">Hardwell</div><div class="ac-fans">Ana · Selim</div></div>
             <div class="artist-card"><div class="ac-name">Alesso</div><div class="ac-fans">Rodrigo · Antonis</div></div>
             <div class="artist-card"><div class="ac-name">Gryffin</div><div class="ac-fans">Dimitrios · Sissy</div></div>
-            <div class="artist-card"><div class="ac-name">Dimitri Vegas &amp; Like Mike</div><div class="ac-fans">Dimitrios · Selim</div></div>
+            <div class="artist-card"><div class="ac-name">Dimitri Vegas & Like Mike</div><div class="ac-fans">Dimitrios · Selim</div></div>
             <div class="artist-card"><div class="ac-name">Armin van Buuren</div><div class="ac-fans">Ana</div></div>
             <div class="artist-card"><div class="ac-name">Artbat</div><div class="ac-fans">Sissy</div></div>
             <div class="artist-card"><div class="ac-name">Martin (Garrix?)</div><div class="ac-fans">Selim</div></div>
@@ -375,6 +420,7 @@ html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'I
   </div>
 </div>
 
+<!-- ════════ GAME 1: WHO GOT VOTED ════════ -->
 <div class="view" id="view-game1">
   <div class="gscreen active" id="g1-lobby">
     <div class="g-eyebrow">Squad game 1</div>
@@ -410,6 +456,7 @@ html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'I
   </div>
 </div>
 
+<!-- ════════ GAME 2: WHO SAID IT ════════ -->
 <div class="view" id="view-game2">
   <div class="gscreen active" id="g2-lobby">
     <div class="g-eyebrow">Squad game 2</div>
@@ -445,9 +492,12 @@ html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'I
   </div>
 </div>
 
-</div>
+</div><!-- /.app -->
 
 <script>
+/* ════════════════════════════════
+   TAB SWITCHING
+════════════════════════════════ */
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -458,6 +508,9 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
+/* ════════════════════════════════
+   PRESENTATION
+════════════════════════════════ */
 (function() {
   const track = document.getElementById('pres-track');
   const slides = track.querySelectorAll('.slide');
@@ -467,12 +520,14 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   const prevBtn = document.getElementById('prev-btn');
   const nextBtn = document.getElementById('next-btn');
   let current = 0, animating = false, barsAnimated = false;
+
   for (let i = 0; i < total; i++) {
     const d = document.createElement('div');
     d.className = 'dot' + (i === 0 ? ' active' : '');
     d.addEventListener('click', () => goTo(i));
     dotsEl.appendChild(d);
   }
+
   function animateIn(idx) {
     const slide = slides[idx];
     slide.querySelectorAll('.animate-in').forEach(el => el.classList.remove('visible'));
@@ -489,9 +544,11 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
       }
     }));
   }
+
   function goTo(idx) {
     if (animating || idx === current) return;
-    animating = true; current = idx;
+    animating = true;
+    current = idx;
     track.style.transform = `translateX(-${current * 100}%)`;
     dotsEl.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
     counter.textContent = (current + 1) + ' / ' + total;
@@ -499,51 +556,341 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     nextBtn.disabled = current === total - 1;
     setTimeout(() => { animateIn(current); animating = false; }, 300);
   }
+
   prevBtn.addEventListener('click', () => goTo(current - 1));
   nextBtn.addEventListener('click', () => goTo(current + 1));
+
   document.addEventListener('keydown', e => {
     if (document.getElementById('view-pres').classList.contains('active')) {
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(Math.min(current + 1, total - 1));
       if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(Math.max(current - 1, 0));
     }
   });
+
   animateIn(0);
 })();
 
+/* ════════════════════════════════
+   GAME 1 — WHO GOT VOTED
+════════════════════════════════ */
 (function() {
   const DATA = {
-    Dimitrios:{from:'Barcelona',others:[{label:'is first on a mission to find... candy',voters:['Ana','Selim','Diego']},{label:'misses the start of a set they hyped for weeks',voters:['Rodrigo','Marcela']},{label:'ends up on the TML recap video',voters:['Antonis']},{label:'loses their mind when their fave song drops',voters:['Sissy']}],self:'loses their mind when their fave song drops'},
-    Sissy:{from:'Barcelona',others:[{label:'misses the start of a set they hyped for weeks',voters:['Dimitrios','Antonis']},{label:'makes sure everyone gets back to the tent',voters:['Selim','Diego']},{label:'ends up on the TML recap video',voters:['Marcela']},{label:'loses their mind when their fave song drops',voters:['Ana']},{label:'is first on a mission to find... candy',voters:['Rodrigo']}],self:'misses the start of a set they hyped for weeks'},
-    Ana:{from:'Madrid',others:[{label:'becomes the unofficial squad photographer',voters:['Dimitrios','Selim','Marcela']},{label:'makes sure everyone gets back to the tent',voters:['Sissy','Rodrigo']},{label:'adopts a rando as a best friend',voters:['Antonis']},{label:'loses their mind when their fave song drops',voters:['Diego']}],self:'becomes the unofficial squad photographer'},
-    Selim:{from:'Madrid',others:[{label:'is first on a mission to find... candy',voters:['Dimitrios','Sissy','Marcela']},{label:'ends up on the TML recap video',voters:['Ana','Diego']},{label:'adopts a rando as a best friend',voters:['Rodrigo']},{label:'disappears for 2+ hours with an unbelievable story',voters:['Antonis']}],self:'loses their mind when their fave song drops'},
-    Rodrigo:{from:'São Paulo',others:[{label:'adopts a rando as a best friend',voters:['Dimitrios','Sissy','Ana','Diego']},{label:'disappears for 2+ hours with an unbelievable story',voters:['Selim','Marcela']},{label:'is first on a mission to find... candy',voters:['Antonis']}],self:'ends up on the TML recap video'},
-    Marcela:{from:'Aguascalientes',others:[{label:'becomes the unofficial squad photographer',voters:['Sissy','Rodrigo','Antonis']},{label:'misses the start of a set they hyped for weeks',voters:['Selim','Diego']},{label:'makes sure everyone gets back to the tent',voters:['Dimitrios','Ana']}],self:'makes sure everyone gets back to the tent'},
-    Antonis:{from:'Thessaloniki',others:[{label:'ends up on the TML recap video',voters:['Dimitrios','Sissy']},{label:'adopts a rando as a best friend',voters:['Selim','Marcela']},{label:'disappears for 2+ hours with an unbelievable story',voters:['Ana','Diego']},{label:'loses their mind when their fave song drops',voters:['Rodrigo']}],self:'makes sure everyone gets back to the tent'},
-    Diego:{from:'Aguascalientes',others:[{label:'disappears for 2+ hours with an unbelievable story',voters:['Dimitrios','Sissy','Rodrigo']},{label:'loses their mind when their fave song drops',voters:['Marcela','Antonis']},{label:'ends up on the TML recap video',voters:['Selim']},{label:'misses the start of a set they hyped for weeks',voters:['Ana']}],self:'becomes the unofficial squad photographer'},
+    Dimitrios: {
+      from:'Barcelona',
+      others:[
+        {label:'is first on a mission to find... candy', voters:['Ana','Selim','Diego']},
+        {label:'misses the start of a set they hyped for weeks', voters:['Rodrigo','Marcela']},
+        {label:'ends up on the TML recap video', voters:['Antonis']},
+        {label:'loses their mind when their fave song drops', voters:['Sissy']},
+      ],
+      self:'loses their mind when their fave song drops',
+    },
+    Sissy: {
+      from:'Barcelona',
+      others:[
+        {label:'misses the start of a set they hyped for weeks', voters:['Dimitrios','Antonis']},
+        {label:'makes sure everyone gets back to the tent', voters:['Selim','Diego']},
+        {label:'ends up on the TML recap video', voters:['Marcela']},
+        {label:'loses their mind when their fave song drops', voters:['Ana']},
+        {label:'is first on a mission to find... candy', voters:['Rodrigo']},
+      ],
+      self:'misses the start of a set they hyped for weeks',
+    },
+    Ana: {
+      from:'Madrid',
+      others:[
+        {label:'becomes the unofficial squad photographer', voters:['Dimitrios','Selim','Marcela']},
+        {label:'makes sure everyone gets back to the tent', voters:['Sissy','Rodrigo']},
+        {label:'adopts a rando as a best friend', voters:['Antonis']},
+        {label:'loses their mind when their fave song drops', voters:['Diego']},
+      ],
+      self:'becomes the unofficial squad photographer',
+    },
+    Selim: {
+      from:'Madrid',
+      others:[
+        {label:'is first on a mission to find... candy', voters:['Dimitrios','Sissy','Marcela']},
+        {label:'ends up on the TML recap video', voters:['Ana','Diego']},
+        {label:'adopts a rando as a best friend', voters:['Rodrigo']},
+        {label:'disappears for 2+ hours with an unbelievable story', voters:['Antonis']},
+      ],
+      self:'loses their mind when their fave song drops',
+    },
+    Rodrigo: {
+      from:'São Paulo',
+      others:[
+        {label:'adopts a rando as a best friend', voters:['Dimitrios','Sissy','Ana','Diego']},
+        {label:'disappears for 2+ hours with an unbelievable story', voters:['Selim','Marcela']},
+        {label:'is first on a mission to find... candy', voters:['Antonis']},
+      ],
+      self:'ends up on the TML recap video',
+    },
+    Marcela: {
+      from:'Aguascalientes',
+      others:[
+        {label:'becomes the unofficial squad photographer', voters:['Sissy','Rodrigo','Antonis']},
+        {label:'misses the start of a set they hyped for weeks', voters:['Selim','Diego']},
+        {label:'makes sure everyone gets back to the tent', voters:['Dimitrios','Ana']},
+      ],
+      self:'makes sure everyone gets back to the tent',
+    },
+    Antonis: {
+      from:'Thessaloniki',
+      others:[
+        {label:'ends up on the TML recap video', voters:['Dimitrios','Sissy']},
+        {label:'adopts a rando as a best friend', voters:['Selim','Marcela']},
+        {label:'disappears for 2+ hours with an unbelievable story', voters:['Ana','Diego']},
+        {label:'loses their mind when their fave song drops', voters:['Rodrigo']},
+      ],
+      self:'makes sure everyone gets back to the tent',
+    },
+    Diego: {
+      from:'Aguascalientes',
+      others:[
+        {label:'disappears for 2+ hours with an unbelievable story', voters:['Dimitrios','Sissy','Rodrigo']},
+        {label:'loses their mind when their fave song drops', voters:['Marcela','Antonis']},
+        {label:'ends up on the TML recap video', voters:['Selim']},
+        {label:'misses the start of a set they hyped for weeks', voters:['Ana']},
+      ],
+      self:'becomes the unofficial squad photographer',
+    },
   };
-  const ALL_LABELS=['ends up on the TML recap video','adopts a rando as a best friend','misses the start of a set they hyped for weeks','loses their mind when their fave song drops','disappears for 2+ hours with an unbelievable story','makes sure everyone gets back to the tent','becomes the unofficial squad photographer','is first on a mission to find... candy'];
-  const squad=Object.keys(DATA);const done=new Set();let currentPerson=null,guessSelected=null;
-  function showG1(id){document.querySelectorAll('#view-game1 .gscreen,#view-game1 .gscreen-scroll').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-  function buildLobby(){const grid=document.getElementById('g1-squad-grid');grid.innerHTML='';squad.forEach(name=>{const btn=document.createElement('button');btn.className='squad-btn'+(done.has(name)?' done':'');btn.innerHTML=`<span class="sb-name">${name}</span><span class="sb-from">${DATA[name].from}</span>`;if(!done.has(name))btn.addEventListener('click',()=>startRound(name));grid.appendChild(btn);});}
-  function startRound(name){currentPerson=name;guessSelected=null;const data=DATA[name];document.getElementById('g1-progress').textContent=(done.size+1)+' of '+squad.length;document.getElementById('g1-name').innerHTML=`<span>${name}</span>`;document.getElementById('g1-prompt').textContent=`${name}, what do you think the squad voted you for?`;const cb=document.getElementById('g1-confirm');cb.disabled=true;cb.style.display='block';document.getElementById('g1-reveal-others').classList.remove('visible');document.getElementById('g1-reveal-self').classList.remove('visible');document.getElementById('g1-self-card').classList.remove('visible');document.getElementById('g1-drum').style.display='block';document.getElementById('g1-match').classList.remove('visible','yes','no');document.getElementById('g1-next').classList.remove('visible');const gg=document.getElementById('g1-guess-grid');gg.innerHTML='';const labels=new Set([...data.others.map(o=>o.label),data.self,...ALL_LABELS]);[...labels].forEach(label=>{const btn=document.createElement('button');btn.className='guess-btn';btn.textContent=label;btn.addEventListener('click',()=>{gg.querySelectorAll('.guess-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');guessSelected=label;cb.disabled=false;});gg.appendChild(btn);});showG1('g1-round');document.getElementById('g1-round').scrollTop=0;}
-  document.getElementById('g1-confirm').addEventListener('click',()=>{document.getElementById('g1-confirm').style.display='none';document.getElementById('g1-guess-grid').querySelectorAll('.guess-btn').forEach(b=>{b.classList.add('disabled');if(b.textContent!==guessSelected)b.style.opacity='0.3';});const data=DATA[currentPerson];const voteRows=document.getElementById('g1-vote-rows');voteRows.innerHTML='';const merged=data.others.map(v=>({label:v.label,count:v.voters.length}));const sm=merged.find(v=>v.label===data.self);if(sm){sm.count+=1;}else{merged.push({label:data.self,count:1});}merged.sort((a,b)=>b.count-a.count);merged.forEach(vote=>{const row=document.createElement('div');row.className='vote-row';row.innerHTML=`<div class="vote-count">${vote.count}x</div><div class="vote-label">${vote.label}</div>`;voteRows.appendChild(row);});document.getElementById('g1-reveal-others').classList.add('visible');const rows=voteRows.querySelectorAll('.vote-row');rows.forEach((row,i)=>{setTimeout(()=>{row.classList.add('visible');if(i===rows.length-1)setTimeout(()=>{document.getElementById('g1-reveal-self').classList.add('visible');document.getElementById('g1-round').scrollTop=9999;},600);},300+i*400);});});
-  document.getElementById('g1-drum').addEventListener('click',()=>{document.getElementById('g1-drum').style.display='none';const data=DATA[currentPerson];document.getElementById('g1-self-ans').textContent=data.self;document.getElementById('g1-self-card').classList.add('visible');setTimeout(()=>{const banner=document.getElementById('g1-match');const topVote=[...data.others].sort((a,b)=>b.voters.length-a.voters.length)[0].label;const isMatch=data.self===topVote;const isFemale=['Sissy','Ana','Marcela'].includes(currentPerson);banner.textContent=isMatch?`Self-aware ${isFemale?'queen':'king'}. The squad and ${currentPerson} are perfectly aligned on this one.`:`The squad disagrees. They voted "${topVote}" but ${currentPerson} voted themselves for "${data.self}". Beautiful.`;banner.classList.add('visible',isMatch?'yes':'no');setTimeout(()=>{document.getElementById('g1-next').classList.add('visible');document.getElementById('g1-round').scrollTop=9999;},500);},600);});
-  document.getElementById('g1-next').addEventListener('click',()=>{done.add(currentPerson);if(done.size===squad.length)showG1('g1-done');else{buildLobby();showG1('g1-lobby');}});
-  document.getElementById('g1-restart').addEventListener('click',()=>{done.clear();buildLobby();showG1('g1-lobby');});
+  const ALL_LABELS = ['ends up on the TML recap video','adopts a rando as a best friend','misses the start of a set they hyped for weeks','loses their mind when their fave song drops','disappears for 2+ hours with an unbelievable story','makes sure everyone gets back to the tent','becomes the unofficial squad photographer','is first on a mission to find... candy'];
+  const squad = Object.keys(DATA);
+  const done = new Set();
+  let currentPerson = null, guessSelected = null;
+
+  function showG1(id) {
+    document.querySelectorAll('#view-game1 .gscreen, #view-game1 .gscreen-scroll').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function buildLobby() {
+    const grid = document.getElementById('g1-squad-grid');
+    grid.innerHTML = '';
+    squad.forEach(name => {
+      const btn = document.createElement('button');
+      btn.className = 'squad-btn' + (done.has(name) ? ' done' : '');
+      btn.innerHTML = `<span class="sb-name">${name}</span><span class="sb-from">${DATA[name].from}</span>`;
+      if (!done.has(name)) btn.addEventListener('click', () => startRound(name));
+      grid.appendChild(btn);
+    });
+  }
+
+  function startRound(name) {
+    currentPerson = name; guessSelected = null;
+    const data = DATA[name];
+    document.getElementById('g1-progress').textContent = (done.size + 1) + ' of ' + squad.length;
+    document.getElementById('g1-name').innerHTML = `<span>${name}</span>`;
+    document.getElementById('g1-prompt').textContent = `${name}, what do you think the squad voted you for?`;
+    const confirmBtn = document.getElementById('g1-confirm');
+    confirmBtn.disabled = true; confirmBtn.style.display = 'block';
+    document.getElementById('g1-reveal-others').classList.remove('visible');
+    document.getElementById('g1-reveal-self').classList.remove('visible');
+    document.getElementById('g1-self-card').classList.remove('visible');
+    document.getElementById('g1-drum').style.display = 'block';
+    document.getElementById('g1-match').classList.remove('visible','yes','no');
+    document.getElementById('g1-next').classList.remove('visible');
+    const gg = document.getElementById('g1-guess-grid');
+    gg.innerHTML = '';
+    const labels = new Set([...data.others.map(o=>o.label), data.self, ...ALL_LABELS]);
+    [...labels].forEach(label => {
+      const btn = document.createElement('button');
+      btn.className = 'guess-btn'; btn.textContent = label;
+      btn.addEventListener('click', () => {
+        gg.querySelectorAll('.guess-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected'); guessSelected = label; confirmBtn.disabled = false;
+      });
+      gg.appendChild(btn);
+    });
+    showG1('g1-round');
+    document.getElementById('g1-round').scrollTop = 0;
+  }
+
+  document.getElementById('g1-confirm').addEventListener('click', () => {
+    document.getElementById('g1-confirm').style.display = 'none';
+    document.getElementById('g1-guess-grid').querySelectorAll('.guess-btn').forEach(b => {
+      b.classList.add('disabled');
+      if (b.textContent !== guessSelected) b.style.opacity = '0.3';
+    });
+    const data = DATA[currentPerson];
+    const voteRows = document.getElementById('g1-vote-rows');
+    voteRows.innerHTML = '';
+    // Merge self-vote into counts so nothing is identifiable by elimination
+    const merged = data.others.map(v => ({ label: v.label, count: v.voters.length }));
+    const selfMatch = merged.find(v => v.label === data.self);
+    if (selfMatch) { selfMatch.count += 1; }
+    else { merged.push({ label: data.self, count: 1 }); }
+    merged.sort((a, b) => b.count - a.count);
+    merged.forEach(vote => {
+      const row = document.createElement('div');
+      row.className = 'vote-row';
+      row.innerHTML = `<div class="vote-count">${vote.count}x</div><div class="vote-label">${vote.label}</div>`;
+      voteRows.appendChild(row);
+    });
+    document.getElementById('g1-reveal-others').classList.add('visible');
+    const rows = voteRows.querySelectorAll('.vote-row');
+    rows.forEach((row, i) => {
+      setTimeout(() => {
+        row.classList.add('visible');
+        if (i === rows.length - 1) setTimeout(() => {
+          document.getElementById('g1-reveal-self').classList.add('visible');
+          document.getElementById('g1-round').scrollTop = 9999;
+        }, 600);
+      }, 300 + i * 400);
+    });
+  });
+
+  document.getElementById('g1-drum').addEventListener('click', () => {
+    document.getElementById('g1-drum').style.display = 'none';
+    const data = DATA[currentPerson];
+    document.getElementById('g1-self-ans').textContent = data.self;
+    document.getElementById('g1-self-card').classList.add('visible');
+    setTimeout(() => {
+      const banner = document.getElementById('g1-match');
+      const topVote = [...data.others].sort((a,b) => b.voters.length - a.voters.length)[0].label;
+      const isMatch = data.self === topVote;
+      const isFemale = ['Sissy','Ana','Marcela'].includes(currentPerson);
+      banner.textContent = isMatch
+        ? `Self-aware ${isFemale ? 'queen' : 'king'}. The squad and ${currentPerson} are perfectly aligned on this one.`
+        : `The squad disagrees. They voted "${topVote}" but ${currentPerson} voted themselves for "${data.self}". Beautiful.`;
+      banner.classList.add('visible', isMatch ? 'yes' : 'no');
+      setTimeout(() => { document.getElementById('g1-next').classList.add('visible'); document.getElementById('g1-round').scrollTop = 9999; }, 500);
+    }, 600);
+  });
+
+  document.getElementById('g1-next').addEventListener('click', () => {
+    done.add(currentPerson);
+    if (done.size === squad.length) showG1('g1-done');
+    else { buildLobby(); showG1('g1-lobby'); }
+  });
+
+  document.getElementById('g1-restart').addEventListener('click', () => { done.clear(); buildLobby(); showG1('g1-lobby'); });
+
   buildLobby();
 })();
 
+/* ════════════════════════════════
+   GAME 2 — WHO SAID IT
+════════════════════════════════ */
 (function() {
-  const QUOTES={Dimitrios:{q22:{text:'The feeling of freedom and happiness',owner:'Dimitrios'},q23:{text:'Candy readiness',owner:'Dimitrios'}},Sissy:{q22:{text:"Tomorrowland's vibe",owner:'Sissy'},q23:{text:'Leaving my dog behind and heavy rain',owner:'Sissy'}},Ana:{q22:{text:'Vibes, music and design of the stages',owner:'Ana'},q23:{text:'Camping',owner:'Ana'}},Selim:{q22:{text:'Having a good time with good people',owner:'Selim'},q23:{text:'Not finding candy',owner:'Selim'}},Rodrigo:{q22:{text:'Meeting our crew!',owner:'Rodrigo'},q23:{text:'Being late for the festival',owner:'Rodrigo'}},Marcela:{q22:{text:'A new experience in my life',owner:'Marcela'},q23:{text:'Not sleeping',owner:'Marcela'}},Antonis:{q22:{text:'Watching the main stage be the main stage',owner:'Antonis'},q23:{text:'Weather :)',owner:'Antonis'}},Diego:{q22:{text:'Seeing the Tomorrowland 2025 team again!',owner:'Diego'},q23:{text:'Renting the tent for Marcela and I',owner:'Diego'}}};
-  const ASSIGN={q22:{Dimitrios:'Rodrigo',Sissy:'Marcela',Ana:'Dimitrios',Selim:'Sissy',Rodrigo:'Ana',Marcela:'Selim',Antonis:'Diego',Diego:'Antonis'},q23:{Dimitrios:'Marcela',Sissy:'Rodrigo',Ana:'Sissy',Selim:'Dimitrios',Rodrigo:'Diego',Marcela:'Antonis',Antonis:'Ana',Diego:'Selim'}};
-  const squad=Object.keys(QUOTES);const roundsDone={};squad.forEach(p=>roundsDone[p]=0);let currentPerson=null,currentRound=null,guessSelected=null,totalCorrect=0,totalPlayed=0;
-  function showG2(id){document.querySelectorAll('#view-game2 .gscreen,#view-game2 .gscreen-scroll').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-  function buildCards(){const grid=document.getElementById('g2-card-grid');grid.innerHTML='';squad.forEach(name=>{const done=roundsDone[name];const card=document.createElement('div');card.className='person-card'+(done===1?' half-done':'')+(done===2?' all-done':'');if(done===1){const b=document.createElement('div');b.className='pc-badge';card.appendChild(b);}card.innerHTML+=`<span class="pc-name">${name}</span><div class="pc-status">${done===0?'tap to flip':done===1?'1 of 2 done':'done'}</div>`;if(done<2)card.addEventListener('click',()=>startWsi(name));grid.appendChild(card);});}
-  function startWsi(name){currentPerson=name;guessSelected=null;currentRound=roundsDone[name]===0?'q22':'q23';const owner=ASSIGN[currentRound][name];const quote=QUOTES[owner][currentRound];const played=squad.reduce((a,p)=>a+roundsDone[p],0);document.getElementById('g2-progress').textContent=(played+1)+' of 16';document.getElementById('g2-name').innerHTML=`<span>${name}</span>`;document.getElementById('g2-prompt').textContent=currentRound==='q22'?`${name}, who said they're most excited about this?`:`${name}, who said they're lowkey nervous about this?`;document.getElementById('g2-quote-tag').textContent=currentRound==='q22'?'most excited about...':'lowkey nervous about...';document.getElementById('g2-quote-text').textContent=quote.text;const qc=document.getElementById('g2-quote-card');qc.classList.remove('visible');requestAnimationFrame(()=>requestAnimationFrame(()=>qc.classList.add('visible')));const cb=document.getElementById('g2-confirm');cb.disabled=true;cb.style.display='block';document.getElementById('g2-reveal').classList.remove('visible');document.getElementById('g2-result').classList.remove('visible','correct-banner','wrong-banner');document.getElementById('g2-next').classList.remove('visible');document.getElementById('g2-drum').style.display='block';const gg=document.getElementById('g2-guess-grid');gg.innerHTML='';squad.filter(p=>p!==name).forEach(p=>{const btn=document.createElement('button');btn.className='wsi-guess-btn';btn.textContent=p;btn.dataset.name=p;btn.addEventListener('click',()=>{gg.querySelectorAll('.wsi-guess-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');guessSelected=p;cb.disabled=false;});gg.appendChild(btn);});showG2('g2-round');document.getElementById('g2-round').scrollTop=0;}
-  document.getElementById('g2-confirm').addEventListener('click',()=>{document.getElementById('g2-confirm').style.display='none';document.getElementById('g2-guess-grid').querySelectorAll('.wsi-guess-btn').forEach(b=>{b.classList.add('disabled');if(b.dataset.name!==guessSelected)b.style.opacity='0.3';});document.getElementById('g2-reveal').classList.add('visible');document.getElementById('g2-round').scrollTop=9999;});
-  document.getElementById('g2-drum').addEventListener('click',()=>{document.getElementById('g2-drum').style.display='none';const owner=ASSIGN[currentRound][currentPerson];const isCorrect=guessSelected===owner;if(isCorrect)totalCorrect++;totalPlayed++;document.getElementById('g2-guess-grid').querySelectorAll('.wsi-guess-btn').forEach(b=>{if(b.dataset.name===owner)b.classList.add('reveal-correct');else if(b.dataset.name===guessSelected&&!isCorrect)b.classList.add('wrong');});const result=document.getElementById('g2-result');document.getElementById('g2-rb-big').textContent=isCorrect?'CORRECT!':'NOPE!';document.getElementById('g2-rb-text').textContent=isCorrect?`Yes! ${owner} said that. ${currentPerson} knows their squad.`:`That was ${owner}. ${currentPerson} guessed ${guessSelected} — not quite.`;result.classList.add('visible',isCorrect?'correct-banner':'wrong-banner');setTimeout(()=>{document.getElementById('g2-next').classList.add('visible');document.getElementById('g2-round').scrollTop=9999;},500);});
-  document.getElementById('g2-next').addEventListener('click',()=>{roundsDone[currentPerson]++;const allDone=squad.every(p=>roundsDone[p]===2);if(allDone){document.getElementById('g2-score').textContent=totalCorrect+' / '+totalPlayed+' correct';showG2('g2-done');}else{buildCards();showG2('g2-lobby');}});
-  document.getElementById('g2-restart').addEventListener('click',()=>{squad.forEach(p=>roundsDone[p]=0);totalCorrect=0;totalPlayed=0;buildCards();showG2('g2-lobby');});
+  const QUOTES = {
+    Dimitrios:{q22:{text:'The feeling of freedom and happiness',owner:'Dimitrios'},q23:{text:'Candy readiness',owner:'Dimitrios'}},
+    Sissy:{q22:{text:"Tomorrowland's vibe",owner:'Sissy'},q23:{text:'Leaving my dog behind and heavy rain',owner:'Sissy'}},
+    Ana:{q22:{text:'Vibes, music and design of the stages',owner:'Ana'},q23:{text:'Camping',owner:'Ana'}},
+    Selim:{q22:{text:'Having a good time with good people',owner:'Selim'},q23:{text:'Not finding candy',owner:'Selim'}},
+    Rodrigo:{q22:{text:'Meeting our crew!',owner:'Rodrigo'},q23:{text:'Being late for the festival',owner:'Rodrigo'}},
+    Marcela:{q22:{text:'A new experience in my life',owner:'Marcela'},q23:{text:'Not sleeping',owner:'Marcela'}},
+    Antonis:{q22:{text:'Watching the main stage be the main stage',owner:'Antonis'},q23:{text:'Weather :)',owner:'Antonis'}},
+    Diego:{q22:{text:'Seeing the Tomorrowland 2025 team again!',owner:'Diego'},q23:{text:'Renting the tent for Marcela and I',owner:'Diego'}},
+  };
+  const ASSIGN = {
+    q22:{Dimitrios:'Rodrigo',Sissy:'Marcela',Ana:'Dimitrios',Selim:'Sissy',Rodrigo:'Ana',Marcela:'Selim',Antonis:'Diego',Diego:'Antonis'},
+    q23:{Dimitrios:'Marcela',Sissy:'Rodrigo',Ana:'Sissy',Selim:'Dimitrios',Rodrigo:'Diego',Marcela:'Antonis',Antonis:'Ana',Diego:'Selim'},
+  };
+  const squad = Object.keys(QUOTES);
+  const roundsDone = {};
+  squad.forEach(p => roundsDone[p] = 0);
+  let currentPerson = null, currentRound = null, guessSelected = null;
+  let totalCorrect = 0, totalPlayed = 0;
+
+  function showG2(id) {
+    document.querySelectorAll('#view-game2 .gscreen, #view-game2 .gscreen-scroll').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function buildCards() {
+    const grid = document.getElementById('g2-card-grid');
+    grid.innerHTML = '';
+    squad.forEach(name => {
+      const done = roundsDone[name];
+      const card = document.createElement('div');
+      card.className = 'person-card' + (done===1?' half-done':'') + (done===2?' all-done':'');
+      if (done===1) { const b=document.createElement('div'); b.className='pc-badge'; card.appendChild(b); }
+      card.innerHTML += `<span class="pc-name">${name}</span><div class="pc-status">${done===0?'tap to flip':done===1?'1 of 2 done':'done'}</div>`;
+      if (done < 2) card.addEventListener('click', () => startWsi(name));
+      grid.appendChild(card);
+    });
+  }
+
+  function startWsi(name) {
+    currentPerson = name; guessSelected = null;
+    currentRound = roundsDone[name] === 0 ? 'q22' : 'q23';
+    const owner = ASSIGN[currentRound][name];
+    const quote = QUOTES[owner][currentRound];
+    const played = squad.reduce((a,p)=>a+roundsDone[p],0);
+    document.getElementById('g2-progress').textContent = (played+1) + ' of 16';
+    document.getElementById('g2-name').innerHTML = `<span>${name}</span>`;
+    document.getElementById('g2-prompt').textContent = currentRound==='q22'
+      ? `${name}, who said they're most excited about this?`
+      : `${name}, who said they're lowkey nervous about this?`;
+    document.getElementById('g2-quote-tag').textContent = currentRound==='q22' ? 'most excited about...' : 'lowkey nervous about...';
+    document.getElementById('g2-quote-text').textContent = quote.text;
+    const qc = document.getElementById('g2-quote-card');
+    qc.classList.remove('visible');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>qc.classList.add('visible')));
+    const confirmBtn = document.getElementById('g2-confirm');
+    confirmBtn.disabled = true; confirmBtn.style.display = 'block';
+    document.getElementById('g2-reveal').classList.remove('visible');
+    document.getElementById('g2-result').classList.remove('visible','correct-banner','wrong-banner');
+    document.getElementById('g2-next').classList.remove('visible');
+    document.getElementById('g2-drum').style.display = 'block';
+    const gg = document.getElementById('g2-guess-grid');
+    gg.innerHTML = '';
+    squad.filter(p=>p!==name).forEach(p => {
+      const btn = document.createElement('button');
+      btn.className = 'wsi-guess-btn'; btn.textContent = p; btn.dataset.name = p;
+      btn.addEventListener('click', () => {
+        gg.querySelectorAll('.wsi-guess-btn').forEach(b=>b.classList.remove('selected'));
+        btn.classList.add('selected'); guessSelected = p; confirmBtn.disabled = false;
+      });
+      gg.appendChild(btn);
+    });
+    showG2('g2-round');
+    document.getElementById('g2-round').scrollTop = 0;
+  }
+
+  document.getElementById('g2-confirm').addEventListener('click', () => {
+    document.getElementById('g2-confirm').style.display = 'none';
+    document.getElementById('g2-guess-grid').querySelectorAll('.wsi-guess-btn').forEach(b => {
+      b.classList.add('disabled');
+      if (b.dataset.name !== guessSelected) b.style.opacity = '0.3';
+    });
+    document.getElementById('g2-reveal').classList.add('visible');
+    document.getElementById('g2-round').scrollTop = 9999;
+  });
+
+  document.getElementById('g2-drum').addEventListener('click', () => {
+    document.getElementById('g2-drum').style.display = 'none';
+    const owner = ASSIGN[currentRound][currentPerson];
+    const isCorrect = guessSelected === owner;
+    if (isCorrect) totalCorrect++; totalPlayed++;
+    document.getElementById('g2-guess-grid').querySelectorAll('.wsi-guess-btn').forEach(b => {
+      if (b.dataset.name === owner) b.classList.add('reveal-correct');
+      else if (b.dataset.name === guessSelected && !isCorrect) b.classList.add('wrong');
+    });
+    const result = document.getElementById('g2-result');
+    document.getElementById('g2-rb-big').textContent = isCorrect ? 'CORRECT!' : 'NOPE!';
+    document.getElementById('g2-rb-text').textContent = isCorrect
+      ? `Yes! ${owner} said that. ${currentPerson} knows their squad.`
+      : `That was ${owner}. ${currentPerson} guessed ${guessSelected} — not quite.`;
+    result.classList.add('visible', isCorrect ? 'correct-banner' : 'wrong-banner');
+    setTimeout(() => { document.getElementById('g2-next').classList.add('visible'); document.getElementById('g2-round').scrollTop = 9999; }, 500);
+  });
+
+  document.getElementById('g2-next').addEventListener('click', () => {
+    roundsDone[currentPerson]++;
+    const allDone = squad.every(p => roundsDone[p] === 2);
+    if (allDone) { document.getElementById('g2-score').textContent = totalCorrect + ' / ' + totalPlayed + ' correct'; showG2('g2-done'); }
+    else { buildCards(); showG2('g2-lobby'); }
+  });
+
+  document.getElementById('g2-restart').addEventListener('click', () => {
+    squad.forEach(p => roundsDone[p] = 0);
+    totalCorrect = 0; totalPlayed = 0;
+    buildCards(); showG2('g2-lobby');
+  });
+
   buildCards();
 })();
 </script>
