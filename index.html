@@ -4,7 +4,548 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TML 2026 — Squad HQ</title>
-<script>window.location.href = 'tml2026.html';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;background:#0d0a1a;color:#f0eaff;font-family:'Inter',sans-serif;overflow:hidden}
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:56px;background:#0d0a1a;border-bottom:1px solid #2a2040;flex-shrink:0;z-index:10;position:relative}
+.topnav-brand{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:#c084fc;white-space:nowrap}
+.topnav-brand span{color:#6b5fa0;font-size:16px;letter-spacing:1px;margin-left:8px}
+.topnav-tabs{display:flex;gap:4px}
+.tab-btn{background:transparent;border:1px solid transparent;border-radius:8px;padding:8px 20px;font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1px;color:#5a4f7a;cursor:pointer;transition:color 0.2s,background 0.2s,border-color 0.2s;white-space:nowrap}
+.tab-btn:hover{color:#9b7fff;background:#13102a}
+.tab-btn.active{color:#e8d9ff;background:#13102a;border-color:#2a2040}
+.app{width:100vw;height:calc(100vh - 56px);overflow:hidden;position:relative}
+.view{width:100%;height:100%;display:none;flex-direction:column;overflow:hidden}
+.view.active{display:flex}
+.slides-viewport{flex:1;overflow:hidden;position:relative}
+.slides-track{display:flex;height:100%;transition:transform 0.55s cubic-bezier(0.77,0,0.175,1)}
+.slide{min-width:100%;height:100%;padding:2.5rem 4rem 1.5rem;display:flex;flex-direction:column;gap:1rem;overflow-y:auto}
+.slide::-webkit-scrollbar{width:4px}
+.slide::-webkit-scrollbar-thumb{background:#2a2040;border-radius:2px}
+.slide-eyebrow{font-size:14px;letter-spacing:3px;text-transform:uppercase;color:#6b5fa0}
+.slide-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,5vw,72px);letter-spacing:1px;color:#fff;line-height:1}
+.slide-title span{color:#c084fc}
+.slide-sub{font-size:17px;color:#7c6fa0;font-style:italic}
+.slide-body{flex:1;display:flex;flex-direction:column;gap:10px;min-height:0}
+.cheeky{background:#1e1030;border-left:3px solid #9b7fff;border-radius:0 8px 8px 0;padding:14px 18px;font-size:16px;color:#b09fd0;font-style:italic;flex-shrink:0}
+.answer-block{background:#13102a;border:1px solid #2a2040;border-radius:10px;padding:14px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.ab-answer{font-size:17px;color:#c4b0f0;flex:1}
+.ab-names{font-size:15px;color:#9b7fff;white-space:nowrap;text-align:right;flex-shrink:0}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.stat-card{background:#13102a;border:1px solid #2a2040;border-radius:12px;padding:1.25rem}
+.sc-value{font-family:'Bebas Neue',sans-serif;font-size:48px;color:#c084fc;line-height:1;margin-bottom:4px}
+.sc-label{font-size:16px;color:#6b5fa0;line-height:1.4}
+.sc-names{font-size:15px;color:#9b7fff;margin-top:6px}
+.planner-scale{display:flex;flex-direction:column;gap:10px}
+.planner-row{display:flex;align-items:center;gap:12px}
+.planner-name{font-size:16px;font-weight:500;color:#c4b0f0;width:100px;flex-shrink:0}
+.bar-wrap{flex:1;height:10px;background:#1e1730;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;background:#7c3aed;width:0;transition:width 1s cubic-bezier(0.22,1,0.36,1)}
+.bar-score{font-size:15px;color:#6b5fa0;width:18px;text-align:right;flex-shrink:0}
+.bar-lbl{font-size:14px;color:#7a6fa0;width:220px;flex-shrink:0}
+.trophy{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1px;color:#fbbf24;padding:4px 11px;background:#2a1f08;border:1px solid #4a3510;border-radius:4px;display:inline-block;margin-bottom:6px}
+.animal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:10px}
+.animal-card{background:#13102a;border:1px solid #2a2040;border-radius:10px;padding:14px 16px}
+.an-animal{font-size:17px;font-weight:500;color:#c4b0f0;margin-bottom:4px}
+.an-names{font-size:15px;color:#9b7fff}
+.an-desc{font-size:14px;color:#5a4f7a;margin-top:5px;font-style:italic}
+.artist-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:10px}
+.artist-card{background:#13102a;border:1px solid #2a2040;border-radius:10px;padding:12px 16px}
+.ac-name{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8d9ff;margin-bottom:4px}
+.ac-fans{font-size:14px;color:#9b7fff}
+.busted{background:#2a100a;border:1px solid #6a1a10;border-radius:12px;padding:1rem 1.25rem}
+.busted-title{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#f87171;margin-bottom:6px}
+.busted-row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.busted-name{font-size:16px;font-weight:500;color:#fca5a5;width:90px;flex-shrink:0}
+.busted-said{font-size:15px;color:#7c4040}
+.busted-score{font-size:14px;color:#a05050;margin-left:auto;font-style:italic}
+.big-stat{display:flex;align-items:center;gap:20px;background:#13102a;border:1px solid #2a2040;border-radius:12px;padding:1.5rem}
+.big-num{font-family:'Bebas Neue',sans-serif;font-size:72px;color:#c084fc;line-height:1;flex-shrink:0}
+.big-label{font-size:19px;font-weight:500;color:#e8d9ff;margin-bottom:5px}
+.big-sub{font-size:16px;color:#7c6fa0}
+.intro-card{background:#13102a;border:1px solid #2a2040;border-radius:14px;padding:1.25rem 1.5rem}
+.ic-num{font-family:'Bebas Neue',sans-serif;font-size:52px;color:#c084fc;line-height:1;margin-bottom:4px}
+.ic-label{font-size:16px;color:#6b5fa0}
+.slide-nav{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 4rem 1rem;border-top:1px solid #2a2040;flex-shrink:0}
+.snav-btn{background:#13102a;border:1px solid #2a2040;color:#c084fc;font-size:22px;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,transform 0.1s;flex-shrink:0}
+.snav-btn:hover{background:#1e1730}
+.snav-btn:active{transform:scale(0.92)}
+.snav-btn:disabled{opacity:0.2;cursor:default}
+.snav-dots{display:flex;gap:7px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:#2a2040;transition:background 0.3s,transform 0.3s;cursor:pointer}
+.dot.active{background:#c084fc;transform:scale(1.4)}
+.slide-counter{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:#6b5fa0}
+.animate-in{opacity:0;transform:translateY(18px);transition:opacity 0.45s ease,transform 0.45s ease}
+.animate-in.visible{opacity:1;transform:translateY(0)}
+.gscreen{width:100%;height:100%;display:none;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 4rem;text-align:center}
+.gscreen.active{display:flex}
+.gscreen-scroll{width:100%;height:100%;display:none;flex-direction:column;align-items:flex-start;padding:2.5rem 4rem;overflow-y:auto;text-align:left}
+.gscreen-scroll.active{display:flex}
+.gscreen-scroll::-webkit-scrollbar{width:4px}
+.gscreen-scroll::-webkit-scrollbar-thumb{background:#2a2040;border-radius:2px}
+.g-eyebrow{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#6b5fa0;margin-bottom:0.75rem}
+.g-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,6vw,84px);color:#fff;line-height:1;margin-bottom:0.4rem}
+.g-title span{color:#c084fc}
+.g-sub{font-size:18px;color:#7c6fa0;margin-bottom:2.5rem}
+.g-hint{font-size:15px;color:#3a2f5a;font-style:italic}
+.g-header{width:100%;display:flex;align-items:baseline;justify-content:space-between;margin-bottom:0.4rem;flex-shrink:0}
+.g-progress{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:#3a2f5a}
+.g-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(46px,5.5vw,76px);color:#fff;line-height:1;margin-bottom:0.2rem;flex-shrink:0}
+.g-name span{color:#c084fc}
+.g-prompt{font-size:17px;color:#7c6fa0;font-style:italic;margin-bottom:1.5rem;flex-shrink:0}
+.squad-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%;max-width:780px;margin-bottom:2rem}
+.squad-btn{background:#13102a;border:1px solid #2a2040;border-radius:12px;padding:1.1rem 0.75rem;cursor:pointer;transition:background 0.2s,border-color 0.2s,transform 0.15s;text-align:center}
+.squad-btn:hover{background:#1e1730;border-color:#9b7fff;transform:translateY(-2px)}
+.squad-btn .sb-name{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#e8d9ff;display:block}
+.squad-btn .sb-from{font-size:15px;color:#5a4f7a;margin-top:2px}
+.squad-btn.done{opacity:0.35;cursor:default;pointer-events:none}
+.guess-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;width:100%;margin-bottom:1.25rem;flex-shrink:0}
+.guess-btn{background:#13102a;border:1px solid #2a2040;border-radius:10px;padding:12px 16px;cursor:pointer;font-family:'Inter',sans-serif;font-size:16px;color:#c4b0f0;transition:background 0.2s,border-color 0.2s;text-align:left}
+.guess-btn:hover{background:#1e1730;border-color:#9b7fff}
+.guess-btn.selected{background:#2a1f4a;border-color:#c084fc;color:#fff}
+.guess-btn.disabled{pointer-events:none}
+.guess-btn.correct,.guess-btn.reveal-correct{background:#0f2a1a;border-color:#1a5a30;color:#5eead4}
+.guess-btn.wrong{background:#2a1010;border-color:#5a1a1a;color:#f87171;opacity:0.5}
+.confirm-btn{background:#7c3aed;border:none;border-radius:10px;padding:14px 36px;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:#fff;cursor:pointer;transition:background 0.2s,transform 0.1s;margin-bottom:1.5rem;flex-shrink:0}
+.confirm-btn:hover{background:#9b55ff}
+.confirm-btn:active{transform:scale(0.97)}
+.confirm-btn:disabled{opacity:0.3;cursor:default}
+.drum-btn{background:#1e1030;border:1px solid #4a3570;border-radius:10px;padding:15px 28px;width:100%;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:#9b7fff;cursor:pointer;transition:background 0.2s,border-color 0.2s;margin-bottom:1rem}
+.drum-btn:hover{background:#2a1f4a;border-color:#c084fc}
+.next-btn{background:#13102a;border:1px solid #2a2040;border-radius:10px;padding:13px 30px;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;color:#c084fc;cursor:pointer;opacity:0;transform:translateY(8px);transition:opacity 0.35s ease,transform 0.35s ease,background 0.2s;flex-shrink:0;margin-bottom:2rem}
+.next-btn.visible{opacity:1;transform:translateY(0)}
+.next-btn:hover{background:#1e1730;border-color:#9b7fff}
+.restart-btn{background:#13102a;border:1px solid #2a2040;border-radius:10px;padding:14px 36px;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:#c084fc;cursor:pointer;transition:background 0.2s}
+.restart-btn:hover{background:#1e1730}
+.reveal-section{width:100%;opacity:0;transform:translateY(14px);transition:opacity 0.4s ease,transform 0.4s ease;flex-shrink:0}
+.reveal-section.visible{opacity:1;transform:translateY(0)}
+.vote-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:1.25rem}
+.vote-row{background:#13102a;border:1px solid #2a2040;border-radius:10px;padding:11px 16px;display:flex;align-items:center;gap:14px;opacity:0;transform:translateX(-12px);transition:opacity 0.35s ease,transform 0.35s ease}
+.vote-row.visible{opacity:1;transform:translateX(0)}
+.vote-label{font-size:17px;color:#c4b0f0;flex:1}
+.vote-count{font-family:'Bebas Neue',sans-serif;font-size:30px;color:#c084fc;width:36px;text-align:right;flex-shrink:0}
+.self-card{background:#2a1f4a;border:2px solid #c084fc;border-radius:12px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:16px;opacity:0;transform:scale(0.95);transition:opacity 0.4s ease,transform 0.4s ease}
+.self-card.visible{opacity:1;transform:scale(1)}
+.sc-big{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:#9b7fff;flex-shrink:0;text-transform:uppercase}
+.sc-ans{font-size:18px;font-weight:500;color:#e8d9ff}
+.match-banner{border-radius:8px;padding:12px 18px;font-size:16px;font-style:italic;margin-bottom:1.25rem;opacity:0;transform:translateY(8px);transition:opacity 0.35s ease,transform 0.35s ease}
+.match-banner.visible{opacity:1;transform:translateY(0)}
+.match-banner.yes{background:#0f2a1a;border:1px solid #1a5a30;color:#5eead4}
+.match-banner.no{background:#2a100a;border:1px solid #5a1a1a;color:#f87171}
+.reveal-label{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#6b5fa0;margin-bottom:0.75rem}
+.card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%;max-width:780px;margin-bottom:2rem}
+.person-card{background:#13102a;border:1px solid #2a2040;border-radius:14px;padding:1.1rem 0.75rem;cursor:pointer;transition:background 0.2s,border-color 0.2s,transform 0.15s;position:relative;overflow:hidden;text-align:center}
+.person-card:hover{background:#1e1730;border-color:#9b7fff;transform:translateY(-3px)}
+.person-card .pc-name{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#e8d9ff;display:block}
+.person-card .pc-status{font-size:14px;color:#5a4f7a;margin-top:3px}
+.person-card.half-done{border-color:#4a3570}
+.person-card.half-done .pc-status{color:#9b7fff}
+.person-card.all-done{opacity:0.35;cursor:default;pointer-events:none}
+.pc-badge{position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%;background:#c084fc}
+.quote-card{background:#13102a;border:1px solid #2a2040;border-radius:14px;padding:1.6rem 2rem;margin-bottom:1.5rem;flex-shrink:0;opacity:0;transform:translateY(18px);transition:opacity 0.45s ease,transform 0.45s ease}
+.quote-card.visible{opacity:1;transform:translateY(0)}
+.quote-tag{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#6b5fa0;margin-bottom:0.75rem}
+.quote-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,3.8vw,50px);color:#e8d9ff;line-height:1.15}
+.wsi-guess-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;width:100%;margin-bottom:1.25rem;flex-shrink:0}
+.wsi-guess-btn{background:#13102a;border:1px solid #2a2040;border-radius:10px;padding:13px 14px;cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:24px;color:#c4b0f0;transition:background 0.2s,border-color 0.2s;text-align:center}
+.wsi-guess-btn:hover{background:#1e1730;border-color:#9b7fff}
+.wsi-guess-btn.selected{background:#2a1f4a;border-color:#c084fc;color:#fff}
+.wsi-guess-btn.disabled{pointer-events:none}
+.wsi-guess-btn.correct,.wsi-guess-btn.reveal-correct{background:#0f2a1a;border-color:#1a5a30;color:#5eead4}
+.wsi-guess-btn.wrong{background:#2a1010;border-color:#5a1a1a;color:#f87171;opacity:0.5}
+.result-banner{border-radius:12px;padding:1.1rem 1.5rem;display:flex;align-items:center;gap:16px;opacity:0;transform:scale(0.96);transition:opacity 0.4s ease,transform 0.4s ease;margin-bottom:1.25rem}
+.result-banner.visible{opacity:1;transform:scale(1)}
+.result-banner.correct-banner{background:#0f2a1a;border:1px solid #1a5a30}
+.result-banner.wrong-banner{background:#2a100a;border:1px solid #6a1a10}
+.rb-big{font-family:'Bebas Neue',sans-serif;font-size:50px;line-height:1;flex-shrink:0}
+.correct-banner .rb-big,.correct-banner .rb-text{color:#5eead4}
+.wrong-banner .rb-big,.wrong-banner .rb-text{color:#fca5a5}
+.rb-text{font-size:17px;line-height:1.5}
+.score-line{font-family:'Bebas Neue',sans-serif;font-size:42px;color:#c084fc;margin-bottom:2rem}
+</style>
 </head>
-<body></body>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-brand">TML 2026 <span>SQUAD HQ · July 16–20 · Boom</span></div>
+  <div class="topnav-tabs">
+    <button class="tab-btn active" data-tab="pres">The Squad by the Numbers</button>
+    <button class="tab-btn" data-tab="game1">Who Got Voted?</button>
+    <button class="tab-btn" data-tab="game2">Who Said It?</button>
+  </div>
+</nav>
+
+<div class="app">
+
+<div class="view active" id="view-pres">
+  <div class="slides-viewport">
+    <div class="slides-track" id="pres-track">
+
+      <div class="slide" id="pslide-0">
+        <div class="animate-in"><div class="slide-eyebrow">Weekend 1 · July 16–19 · Boom, Belgium</div></div>
+        <div class="animate-in" style="transition-delay:.08s"><div class="slide-title">THE SQUAD<br><span>BY THE NUMBERS</span></div></div>
+        <div class="animate-in" style="transition-delay:.16s"><div class="slide-sub">8 people. 1 festival. Zero excuses. Let's go.</div></div>
+        <div class="animate-in" style="transition-delay:.22s;display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div class="intro-card"><div class="ic-num">8</div><div class="ic-label">squad members</div></div>
+          <div class="intro-card"><div class="ic-num">4</div><div class="ic-label">days of chaos</div></div>
+          <div class="intro-card"><div class="ic-num">5</div><div class="ic-label">nationalities</div></div>
+          <div class="intro-card"><div class="ic-num">4</div><div class="ic-label">time zones</div></div>
+        </div>
+        <div class="animate-in" style="transition-delay:.30s;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          <div class="intro-card">
+            <div class="ic-label" style="margin-bottom:6px">Traveling from</div>
+            <div style="font-size:15px;color:#9b7fff;line-height:1.8">Barcelona ×2<br>Madrid ×2<br>Thessaloniki ×1<br>São Paulo ×1<br>Aguascalientes ×2</div>
+          </div>
+          <div class="intro-card">
+            <div class="ic-label" style="margin-bottom:6px">Nationalities</div>
+            <div style="font-size:15px;color:#9b7fff;line-height:1.8">Greece ×3<br>Mexico ×2<br>Turkey/Spain ×1<br>Brazil ×1<br>Ecuador ×1</div>
+          </div>
+          <div class="intro-card">
+            <div class="ic-label" style="margin-bottom:6px">Time zones</div>
+            <div style="font-size:15px;color:#9b7fff;line-height:1.8">Max difference: 8h<br>Crossing TZ to Belgium: 4<br>Furthest back: UTC−5 (Mexico)<br>Furthest ahead: UTC+3 (Greece)</div>
+          </div>
+        </div>
+        <div class="animate-in" style="transition-delay:.38s;display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div class="intro-card"><div class="ic-num">5</div><div class="ic-label">TML veterans</div></div>
+          <div class="intro-card"><div class="ic-num">3</div><div class="ic-label">first-timers</div></div>
+          <div class="intro-card"><div class="ic-num" style="font-size:36px;line-height:1.1">3F · 5M</div><div class="ic-label">37.5% · 62.5%</div></div>
+          <div class="intro-card"><div class="ic-num">5:3</div><div class="ic-label">veterans to newbies</div></div>
+        </div>
+      </div>
+
+      <div class="slide" id="pslide-1">
+        <div class="animate-in"><div class="slide-eyebrow">Stat 01</div></div>
+        <div class="animate-in" style="transition-delay:.08s"><div class="slide-title">Festival planner scale</div></div>
+        <div class="animate-in" style="transition-delay:.14s"><div class="slide-sub">From "what schedule?" to "I built a spreadsheet with set times and bathroom break windows"</div></div>
+        <div class="animate-in slide-body" style="transition-delay:.2s">
+          <div class="planner-scale" id="planner-bars">
+            <div class="planner-row"><div class="planner-name">Diego</div><div class="bar-wrap"><div class="bar-fill" data-w="40"></div></div><div class="bar-score">2</div><div class="bar-lbl">"I'll figure it out when I get there"</div></div>
+            <div class="planner-row"><div class="planner-name">Dimitrios</div><div class="bar-wrap"><div class="bar-fill" data-w="60"></div></div><div class="bar-score">3</div><div class="bar-lbl">Vibes-led, loosely guided</div></div>
+            <div class="planner-row"><div class="planner-name">Selim</div><div class="bar-wrap"><div class="bar-fill" data-w="60"></div></div><div class="bar-score">3</div><div class="bar-lbl">Vibes-led, loosely guided</div></div>
+            <div class="planner-row"><div class="planner-name">Marcela</div><div class="bar-wrap"><div class="bar-fill" data-w="60"></div></div><div class="bar-score">3</div><div class="bar-lbl">Vibes-led, loosely guided</div></div>
+            <div class="planner-row"><div class="planner-name">Antonis</div><div class="bar-wrap"><div class="bar-fill" data-w="60"></div></div><div class="bar-score">3</div><div class="bar-lbl">Vibes-led, loosely guided</div></div>
+            <div class="planner-row"><div class="planner-name">Ana</div><div class="bar-wrap"><div class="bar-fill" data-w="80"></div></div><div class="bar-score">4</div><div class="bar-lbl">Has a plan, respects the chaos</div></div>
+            <div class="planner-row"><div class="planner-name">Sissy</div><div class="bar-wrap"><div class="bar-fill" data-w="100" style="background:#c084fc"></div></div><div class="bar-score">5</div><div class="bar-lbl" style="color:#c084fc;font-weight:500">The spreadsheet</div></div>
+            <div class="planner-row"><div class="planner-name">Rodrigo</div><div class="bar-wrap"><div class="bar-fill" data-w="100" style="background:#c084fc"></div></div><div class="bar-score">5</div><div class="bar-lbl" style="color:#c084fc;font-weight:500">The other spreadsheet</div></div>
+          </div>
+        </div>
+        <div class="animate-in" style="transition-delay:.28s"><div class="cheeky">5 out of 8 people rated themselves a 3 or below. The other 3 are going to have a fun time keeping everyone together. That's gonna go well.</div></div>
+      </div>
+
+      <div class="slide" id="pslide-2">
+        <div class="animate-in"><div class="slide-eyebrow">Stat 02</div></div>
+        <div class="animate-in" style="transition-delay:.08s"><div class="slide-title">Festival sleep situation</div></div>
+        <div class="animate-in" style="transition-delay:.14s"><div class="slide-sub">Two camps. No in-between.</div></div>
+        <div class="animate-in slide-body" style="transition-delay:.2s">
+          <div class="stat-grid">
+            <div class="stat-card"><div class="sc-value">4</div><div class="sc-label">Running on 4–5hrs and pure adrenaline</div><div class="sc-names">Dimitrios · Sissy · Selim · Rodrigo</div></div>
+            <div class="stat-card"><div class="sc-value">4</div><div class="sc-label">Sleep a normal amount and somehow feel great</div><div class="sc-names">Ana · Marcela · Antonis · Diego</div></div>
+          </div>
+        </div>
+        <div class="animate-in" style="transition-delay:.28s"><div class="cheeky">A perfectly balanced squad. The gremlins will drag the normals down by day 2, and the normals will judge the gremlins in silence. This is the natural order of things.</div></div>
+      </div>
+
+      <div class="slide" id="pslide-3">
+        <div class="animate-in"><div class="slide-eyebrow">Stat 03</div></div>
+        <div class="animate-in" style="transition-delay:.08s"><div class="slide-title">Getting separated from the group</div></div>
+        <div class="animate-in" style="transition-delay:.14s"><div class="slide-sub">Pick your crisis management style</div></div>
+        <div class="animate-in slide-body" style="transition-delay:.2s">
+          <div class="answer-block"><div class="ab-answer">Send a location pin immediately</div><div class="ab-names">Dimitrios · Sissy · Selim · Antonis</div></div>
+          <div class="answer-block"><div class="ab-answer">Find a good spot and assume you'll find me</div><div class="ab-names">Rodrigo · Marcela · Diego</div></div>
+          <div class="answer-block"><div class="ab-answer">Text "where are you" 47 times</div><div class="ab-names">Ana</div></div>
+        </div>
+        <div class="animate-in" style="transition-delay:.28s"><div class="cheeky">Half the group is proactively helpful. Three people are playing 4D chess, trusting the universe to reunite them. And Ana is singlehandedly keeping a mobile network alive. Ana, we see you, we're coming.</div></div>
+      </div>
+
+      <div class="slide" id="pslide-4">
+        <div class="animate-in"><div class="slide-eyebrow">Stat 04</div></div>
+        <div class="animate-in" style="transition-delay:.08s"><div class="slide-title">Dancing style</div></div>
+        <div class="animate-in" style="transition-delay:.14s"><div class="slide-sub">What you'll be doing at every stage. Or not seeing, as the case may be.</div></div>
+        <div class="animate-in slide-body" style="transition-delay:.2s">
+          <div class="answer-block"><div class="ab-answer">Eyes closed, in my own world</div><div class="ab-names">Dimitrios · Sissy · Ana · Selim · Diego</div></div>
+          <div class="answer-block"><div class="ab-answer">Arm around strangers, singing along to everything</div><div class="ab-names">Selim · Rodrigo</div></div>
+          <div class="answer-block"><div class="ab-answer">Competitive — I need space and I use it</div><div class="ab-names">Selim</div></div>
+          <div class="answer-block"><div class="ab-answer">I cry at the main stage (it happens, no judgment)</div><div class="ab-names">Rodrigo · Marcela</div></div>
+          <div class="answer-block"><div class="ab-answer">I mostly stand and nod but I love it</div><div class="ab-names">Antonis</div></div>
+        </div>
+        <div class="animate-in" style="transition-delay:.28s"><div class="cheeky">5 people will have their eyes closed for most of the festival — they paid hundreds of euros to not see anything. Iconic, really. Meanwhile 2 will be actively crying, which is the correct response. And Selim — arm around strangers, competitive about personal space, eyes closed, probably crying too — is doing all three simultaneously while carving out personal space. The main stage has no idea what's coming.</div></div>
+      </div>
+
+      <div class="slide" id="pslide-5">
+        <div class="animate-in"><div class="slide-eyebrow">Stat 05</div></div>
+        <div class="animate-in" style="transition-delay:.08s"><div class="slide-title">Costume level</div></div>
+        <div class="animate-in" style="transition-delay:.14s"><div class="slide-sub">The most decisive vote of the entire form.</div></div>
+        <div class="animate-in slide-body" style="transition-delay:.2s">
+          <div class="big-stat"><div class="big-num">8/8</div><div><div class="big-label">Festival look — put together but casual</div><div class="big-sub">Every single person. No outliers. No one going full fairy wings. No one going tracksuit.</div></div></div>
+        </div>
+        <div class="animate-in" style="transition-delay:.28s"><div class="cheeky">Great, we all voted for the boring one. Now let's actually decide what fun shit we're wearing.</div></div>
+      </div>
+
+      <div class="slide" id="pslide-6">
+        <div class="animate-in"><div class="slide-eyebrow">Stat 06</div></div>
+        <div class="animate-in" style="transition-delay:.08s"><div class="slide-title">Day 2. It's noon.<br><span>Nobody slept enough.</span></div></div>
+        <div class="animate-in" style="transition-delay:.14s"><div class="slide-sub">Identify your archetype before it identifies you.</div></div>
+        <div class="animate-in slide-body" style="transition-delay:.2s">
+          <div class="answer-block"><div class="ab-answer">The one that needs 45 minutes and three coffees</div><div class="ab-names">Dimitrios · Sissy · Marcela · Diego</div></div>
+          <div class="answer-block"><div class="ab-answer">The one already dressed and ready before everyone else</div><div class="ab-names">Selim · Rodrigo</div></div>
+          <div class="answer-block"><div class="ab-answer">The one who somehow looks fine and won't explain how</div><div class="ab-names">Ana</div></div>
+          <div class="answer-block"><div class="ab-answer">The one who says "five more minutes" and means it</div><div class="ab-names">Antonis</div></div>
+        </div>
+        <div class="animate-in" style="transition-delay:.28s"><div class="cheeky">50% of the squad needs a coffee IV drip before they're functional. Selim and Rodrigo will be annoyingly ready. Ana will look inexplicably fresh and refuse to explain it. And Antonis just needs five minutes — genuinely, actually five minutes — which makes him the most honest person here.</div></div>
+      </div>
+
+      <div class="slide" id="pslide-7">
+        <div class="animate-in"><div class="slide-eyebrow">Stat 07</div></div>
+        <div class="animate-in" style="transition-delay:.08s"><div class="slide-title">Someone wants to leave a set early. You:</div></div>
+        <div class="animate-in" style="transition-delay:.14s"><div class="slide-sub">The defining test of festival character.</div></div>
+        <div class="animate-in slide-body" style="transition-delay:.2s">
+          <div class="answer-block"><div class="ab-answer">Stay until the last drop, non-negotiable</div><div class="ab-names">Dimitrios · Rodrigo · Diego</div></div>
+          <div class="answer-block"><div class="ab-answer">Depends entirely on the DJ</div><div class="ab-names">Ana · Selim · Marcela · Antonis</div></div>
+          <div class="answer-block"><div class="ab-answer">Negotiate a 5-minute compromise and fail</div><div class="ab-names">Sissy</div></div>
+        </div>
+        <div class="animate-in" style="transition-delay:.28s"><div class="cheeky">3 people will chain themselves to the barrier. 4 people are pragmatic — it depends on whether the DJ deserves it. And Sissy will negotiate a compromise, fail, stay until the end, and be fine about it. This group is not leaving early. The crowd will just have to deal.</div></div>
+      </div>
+
+      <div class="slide" id="pslide-8">
+        <div class="animate-in"><div class="slide-eyebrow">Stat 08</div></div>
+        <div class="animate-in" style="transition-delay:.08s"><div class="slide-title">Festival spirit animal</div></div>
+        <div class="animate-in" style="transition-delay:.14s"><div class="slide-sub">Self-assigned. Highly accurate.</div></div>
+        <div class="animate-in slide-body" style="transition-delay:.2s">
+          <div class="animal-grid">
+            <div class="animal-card"><div class="trophy">x3 most popular</div><div class="an-animal">The diplomat</div><div class="an-names">Marcela · Antonis · Diego</div><div class="an-desc">Keeping the peace, reading the group. The glue nobody talks about but everyone needs.</div></div>
+            <div class="animal-card"><div class="an-animal">The golden retriever</div><div class="an-names">Selim · Rodrigo</div><div class="an-desc">Happy, everywhere, loves everyone. Will make 40 new friends by noon on day 1.</div></div>
+            <div class="animal-card"><div class="an-animal">The chameleon</div><div class="an-names">Dimitrios</div><div class="an-desc">Different energy at every stage. A mystery, even to himself.</div></div>
+            <div class="animal-card"><div class="an-animal">The cat</div><div class="an-names">Sissy</div><div class="an-desc">Selective, appears when it wants, mysteriously fine. Cannot be tracked.</div></div>
+            <div class="animal-card"><div class="an-animal">The DJ</div><div class="an-names">Ana</div><div class="an-desc">Here for the music and only the music. Do not interrupt her during a drop.</div></div>
+          </div>
+        </div>
+        <div class="animate-in" style="transition-delay:.28s"><div class="cheeky">Three diplomats, two golden retrievers, a chameleon, a cat, and a DJ walk into Tomorrowland. This is not a joke. This is the squad.</div></div>
+      </div>
+
+      <div class="slide" id="pslide-9">
+        <div class="animate-in"><div class="slide-eyebrow">Stat 09</div></div>
+        <div class="animate-in" style="transition-delay:.08s"><div class="slide-title">The currency of<br><span>Tomorrowland is called...</span></div></div>
+        <div class="animate-in" style="transition-delay:.14s"><div class="slide-sub">It's Pearls. It has always been Pearls. It will always be Pearls.</div></div>
+        <div class="animate-in slide-body" style="transition-delay:.2s">
+          <div class="big-stat"><div class="big-num">6/8</div><div><div class="big-label">Answered correctly: Pearls</div><div class="big-sub">Dimitrios · Sissy · Ana · Rodrigo · Antonis · Diego</div></div></div>
+          <div class="busted">
+            <div class="busted-title">Hall of shame</div>
+            <div class="busted-row"><div class="busted-name">Selim</div><div class="busted-said">Said: "Tokens" — planner score: 3/5</div><div class="busted-score">no excuse</div></div>
+            <div class="busted-row"><div class="busted-name">Marcela</div><div class="busted-said">Said: "Gems" — planner score: 3/5</div><div class="busted-score">no excuse</div></div>
+          </div>
+        </div>
+        <div class="animate-in" style="transition-delay:.28s"><div class="cheeky">Both offenders rated themselves 3 out of 5 on planning. Not low enough to claim innocent ignorance. Not high enough to have done the research. This is the worst of both worlds. Selim, Marcela — there will be a quiz at the gate.</div></div>
+      </div>
+
+      <div class="slide" id="pslide-10">
+        <div class="animate-in"><div class="slide-eyebrow">Stat 10</div></div>
+        <div class="animate-in" style="transition-delay:.08s"><div class="slide-title">Artists we cannot miss</div></div>
+        <div class="animate-in" style="transition-delay:.14s"><div class="slide-sub">Compiled from 8 wishlists. Results may vary once the stages start.</div></div>
+        <div class="animate-in slide-body" style="transition-delay:.2s">
+          <div class="artist-grid">
+            <div class="artist-card"><div class="trophy">7/8 squad votes</div><div class="ac-name">Calvin Harris</div><div class="ac-fans">Dimitrios · Sissy · Ana · Rodrigo · Marcela · Antonis · Diego</div></div>
+            <div class="artist-card"><div class="ac-name">Fisher</div><div class="ac-fans">Ana · Marcela · Diego</div></div>
+            <div class="artist-card"><div class="ac-name">Hardwell</div><div class="ac-fans">Ana · Selim</div></div>
+            <div class="artist-card"><div class="ac-name">Alesso</div><div class="ac-fans">Rodrigo · Antonis</div></div>
+            <div class="artist-card"><div class="ac-name">Gryffin</div><div class="ac-fans">Dimitrios · Sissy</div></div>
+            <div class="artist-card"><div class="ac-name">Dimitri Vegas &amp; Like Mike</div><div class="ac-fans">Dimitrios · Selim</div></div>
+            <div class="artist-card"><div class="ac-name">Armin van Buuren</div><div class="ac-fans">Ana</div></div>
+            <div class="artist-card"><div class="ac-name">Artbat</div><div class="ac-fans">Sissy</div></div>
+            <div class="artist-card"><div class="ac-name">Martin (Garrix?)</div><div class="ac-fans">Selim</div></div>
+            <div class="artist-card"><div class="ac-name">Lost Frequencies</div><div class="ac-fans">Antonis</div></div>
+            <div class="artist-card"><div class="ac-name">Meduza</div><div class="ac-fans">Diego</div></div>
+            <div class="artist-card"><div class="ac-name">Symphony of Unity</div><div class="ac-fans">Rodrigo</div></div>
+          </div>
+        </div>
+        <div class="animate-in" style="transition-delay:.28s"><div class="cheeky">7 out of 8 people said Calvin Harris. The 8th (Selim) either forgot to write him or is making a statement. Either way, we're all going to that set. As for the rest of the wishlist — some of these artists might not even be playing. Let Tomorrowland guide you. The magic is in showing up and letting the stages do the work.</div></div>
+      </div>
+
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="snav-btn" id="prev-btn" disabled>&#8592;</button>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+      <div class="snav-dots" id="pres-dots"></div>
+      <div class="slide-counter" id="pres-counter">1 / 11</div>
+    </div>
+    <button class="snav-btn" id="next-btn">&#8594;</button>
+  </div>
+</div>
+
+<div class="view" id="view-game1">
+  <div class="gscreen active" id="g1-lobby">
+    <div class="g-eyebrow">Squad game 1</div>
+    <div class="g-title">WHO GOT<br><span>VOTED?</span></div>
+    <div class="g-sub">Pick someone. They guess what the squad voted them for. Then we reveal.</div>
+    <div class="squad-grid" id="g1-squad-grid"></div>
+    <div class="g-hint">tap a name to start their round</div>
+  </div>
+  <div class="gscreen-scroll" id="g1-round">
+    <div class="g-header"><div class="g-eyebrow">who got voted?</div><div class="g-progress" id="g1-progress"></div></div>
+    <div class="g-name" id="g1-name"></div>
+    <div class="g-prompt" id="g1-prompt"></div>
+    <div class="guess-grid" id="g1-guess-grid"></div>
+    <button class="confirm-btn" id="g1-confirm" disabled>Lock it in</button>
+    <div class="reveal-section" id="g1-reveal-others">
+      <div class="reveal-label">the squad voted you for...</div>
+      <div class="vote-rows" id="g1-vote-rows"></div>
+    </div>
+    <div class="reveal-section" id="g1-reveal-self">
+      <div class="reveal-label">now... what did you vote for yourself?</div>
+      <div style="margin-bottom:1rem">
+        <button class="drum-btn" id="g1-drum">🥁 drum roll...</button>
+        <div class="self-card" id="g1-self-card"><div class="sc-big">You voted yourself for</div><div class="sc-ans" id="g1-self-ans"></div></div>
+      </div>
+      <div class="match-banner" id="g1-match"></div>
+      <button class="next-btn" id="g1-next">Next person →</button>
+    </div>
+  </div>
+  <div class="gscreen" id="g1-done">
+    <div class="g-title">THAT'S THE<br><span>WHOLE SQUAD</span></div>
+    <div class="g-sub">We now know everything. No secrets. No escape.</div>
+    <button class="restart-btn" id="g1-restart">Play again</button>
+  </div>
+</div>
+
+<div class="view" id="view-game2">
+  <div class="gscreen active" id="g2-lobby">
+    <div class="g-eyebrow">Squad game 2</div>
+    <div class="g-title">WHO<br><span>SAID IT?</span></div>
+    <div class="g-sub">Each person flips their card. A quote appears. Guess who said it.</div>
+    <div class="card-grid" id="g2-card-grid"></div>
+    <div class="g-hint">each person has 2 rounds — tap a card to begin theirs</div>
+  </div>
+  <div class="gscreen-scroll" id="g2-round">
+    <div class="g-header"><div class="g-eyebrow">who said it?</div><div class="g-progress" id="g2-progress"></div></div>
+    <div class="g-name" id="g2-name"></div>
+    <div class="g-prompt" id="g2-prompt"></div>
+    <div class="quote-card" id="g2-quote-card">
+      <div class="quote-tag" id="g2-quote-tag"></div>
+      <div class="quote-text" id="g2-quote-text"></div>
+    </div>
+    <div class="wsi-guess-grid" id="g2-guess-grid"></div>
+    <button class="confirm-btn" id="g2-confirm" disabled>That's my guess</button>
+    <div class="reveal-section" id="g2-reveal">
+      <button class="drum-btn" id="g2-drum">🥁 drum roll...</button>
+      <div class="result-banner" id="g2-result">
+        <div class="rb-big" id="g2-rb-big"></div>
+        <div class="rb-text" id="g2-rb-text"></div>
+      </div>
+      <button class="next-btn" id="g2-next">Next →</button>
+    </div>
+  </div>
+  <div class="gscreen" id="g2-done">
+    <div class="g-title">THAT'S A<br><span>WRAP!</span></div>
+    <div class="g-sub">Everyone's been exposed. No quote goes unattributed.</div>
+    <div class="score-line" id="g2-score"></div>
+    <button class="restart-btn" id="g2-restart">Play again</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + tab).classList.add('active');
+  });
+});
+
+(function() {
+  const track = document.getElementById('pres-track');
+  const slides = track.querySelectorAll('.slide');
+  const total = slides.length;
+  const dotsEl = document.getElementById('pres-dots');
+  const counter = document.getElementById('pres-counter');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  let current = 0, animating = false, barsAnimated = false;
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  }
+  function animateIn(idx) {
+    const slide = slides[idx];
+    slide.querySelectorAll('.animate-in').forEach(el => el.classList.remove('visible'));
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      slide.querySelectorAll('.animate-in').forEach(el => el.classList.add('visible'));
+      if (idx === 1) {
+        setTimeout(() => {
+          slide.querySelectorAll('.bar-fill').forEach(bar => {
+            if (!barsAnimated) bar.style.width = bar.dataset.w + '%';
+            else { bar.style.transition = 'none'; bar.style.width = bar.dataset.w + '%'; }
+          });
+          barsAnimated = true;
+        }, 280);
+      }
+    }));
+  }
+  function goTo(idx) {
+    if (animating || idx === current) return;
+    animating = true; current = idx;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dotsEl.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    counter.textContent = (current + 1) + ' / ' + total;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    setTimeout(() => { animateIn(current); animating = false; }, 300);
+  }
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('view-pres').classList.contains('active')) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(Math.min(current + 1, total - 1));
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(Math.max(current - 1, 0));
+    }
+  });
+  animateIn(0);
+})();
+
+(function() {
+  const DATA = {
+    Dimitrios:{from:'Barcelona',others:[{label:'is first on a mission to find... candy',voters:['Ana','Selim','Diego']},{label:'misses the start of a set they hyped for weeks',voters:['Rodrigo','Marcela']},{label:'ends up on the TML recap video',voters:['Antonis']},{label:'loses their mind when their fave song drops',voters:['Sissy']}],self:'loses their mind when their fave song drops'},
+    Sissy:{from:'Barcelona',others:[{label:'misses the start of a set they hyped for weeks',voters:['Dimitrios','Antonis']},{label:'makes sure everyone gets back to the tent',voters:['Selim','Diego']},{label:'ends up on the TML recap video',voters:['Marcela']},{label:'loses their mind when their fave song drops',voters:['Ana']},{label:'is first on a mission to find... candy',voters:['Rodrigo']}],self:'misses the start of a set they hyped for weeks'},
+    Ana:{from:'Madrid',others:[{label:'becomes the unofficial squad photographer',voters:['Dimitrios','Selim','Marcela']},{label:'makes sure everyone gets back to the tent',voters:['Sissy','Rodrigo']},{label:'adopts a rando as a best friend',voters:['Antonis']},{label:'loses their mind when their fave song drops',voters:['Diego']}],self:'becomes the unofficial squad photographer'},
+    Selim:{from:'Madrid',others:[{label:'is first on a mission to find... candy',voters:['Dimitrios','Sissy','Marcela']},{label:'ends up on the TML recap video',voters:['Ana','Diego']},{label:'adopts a rando as a best friend',voters:['Rodrigo']},{label:'disappears for 2+ hours with an unbelievable story',voters:['Antonis']}],self:'loses their mind when their fave song drops'},
+    Rodrigo:{from:'São Paulo',others:[{label:'adopts a rando as a best friend',voters:['Dimitrios','Sissy','Ana','Diego']},{label:'disappears for 2+ hours with an unbelievable story',voters:['Selim','Marcela']},{label:'is first on a mission to find... candy',voters:['Antonis']}],self:'ends up on the TML recap video'},
+    Marcela:{from:'Aguascalientes',others:[{label:'becomes the unofficial squad photographer',voters:['Sissy','Rodrigo','Antonis']},{label:'misses the start of a set they hyped for weeks',voters:['Selim','Diego']},{label:'makes sure everyone gets back to the tent',voters:['Dimitrios','Ana']}],self:'makes sure everyone gets back to the tent'},
+    Antonis:{from:'Thessaloniki',others:[{label:'ends up on the TML recap video',voters:['Dimitrios','Sissy']},{label:'adopts a rando as a best friend',voters:['Selim','Marcela']},{label:'disappears for 2+ hours with an unbelievable story',voters:['Ana','Diego']},{label:'loses their mind when their fave song drops',voters:['Rodrigo']}],self:'makes sure everyone gets back to the tent'},
+    Diego:{from:'Aguascalientes',others:[{label:'disappears for 2+ hours with an unbelievable story',voters:['Dimitrios','Sissy','Rodrigo']},{label:'loses their mind when their fave song drops',voters:['Marcela','Antonis']},{label:'ends up on the TML recap video',voters:['Selim']},{label:'misses the start of a set they hyped for weeks',voters:['Ana']}],self:'becomes the unofficial squad photographer'},
+  };
+  const ALL_LABELS=['ends up on the TML recap video','adopts a rando as a best friend','misses the start of a set they hyped for weeks','loses their mind when their fave song drops','disappears for 2+ hours with an unbelievable story','makes sure everyone gets back to the tent','becomes the unofficial squad photographer','is first on a mission to find... candy'];
+  const squad=Object.keys(DATA);const done=new Set();let currentPerson=null,guessSelected=null;
+  function showG1(id){document.querySelectorAll('#view-game1 .gscreen,#view-game1 .gscreen-scroll').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+  function buildLobby(){const grid=document.getElementById('g1-squad-grid');grid.innerHTML='';squad.forEach(name=>{const btn=document.createElement('button');btn.className='squad-btn'+(done.has(name)?' done':'');btn.innerHTML=`<span class="sb-name">${name}</span><span class="sb-from">${DATA[name].from}</span>`;if(!done.has(name))btn.addEventListener('click',()=>startRound(name));grid.appendChild(btn);});}
+  function startRound(name){currentPerson=name;guessSelected=null;const data=DATA[name];document.getElementById('g1-progress').textContent=(done.size+1)+' of '+squad.length;document.getElementById('g1-name').innerHTML=`<span>${name}</span>`;document.getElementById('g1-prompt').textContent=`${name}, what do you think the squad voted you for?`;const cb=document.getElementById('g1-confirm');cb.disabled=true;cb.style.display='block';document.getElementById('g1-reveal-others').classList.remove('visible');document.getElementById('g1-reveal-self').classList.remove('visible');document.getElementById('g1-self-card').classList.remove('visible');document.getElementById('g1-drum').style.display='block';document.getElementById('g1-match').classList.remove('visible','yes','no');document.getElementById('g1-next').classList.remove('visible');const gg=document.getElementById('g1-guess-grid');gg.innerHTML='';const labels=new Set([...data.others.map(o=>o.label),data.self,...ALL_LABELS]);[...labels].forEach(label=>{const btn=document.createElement('button');btn.className='guess-btn';btn.textContent=label;btn.addEventListener('click',()=>{gg.querySelectorAll('.guess-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');guessSelected=label;cb.disabled=false;});gg.appendChild(btn);});showG1('g1-round');document.getElementById('g1-round').scrollTop=0;}
+  document.getElementById('g1-confirm').addEventListener('click',()=>{document.getElementById('g1-confirm').style.display='none';document.getElementById('g1-guess-grid').querySelectorAll('.guess-btn').forEach(b=>{b.classList.add('disabled');if(b.textContent!==guessSelected)b.style.opacity='0.3';});const data=DATA[currentPerson];const voteRows=document.getElementById('g1-vote-rows');voteRows.innerHTML='';const merged=data.others.map(v=>({label:v.label,count:v.voters.length}));const sm=merged.find(v=>v.label===data.self);if(sm){sm.count+=1;}else{merged.push({label:data.self,count:1});}merged.sort((a,b)=>b.count-a.count);merged.forEach(vote=>{const row=document.createElement('div');row.className='vote-row';row.innerHTML=`<div class="vote-count">${vote.count}x</div><div class="vote-label">${vote.label}</div>`;voteRows.appendChild(row);});document.getElementById('g1-reveal-others').classList.add('visible');const rows=voteRows.querySelectorAll('.vote-row');rows.forEach((row,i)=>{setTimeout(()=>{row.classList.add('visible');if(i===rows.length-1)setTimeout(()=>{document.getElementById('g1-reveal-self').classList.add('visible');document.getElementById('g1-round').scrollTop=9999;},600);},300+i*400);});});
+  document.getElementById('g1-drum').addEventListener('click',()=>{document.getElementById('g1-drum').style.display='none';const data=DATA[currentPerson];document.getElementById('g1-self-ans').textContent=data.self;document.getElementById('g1-self-card').classList.add('visible');setTimeout(()=>{const banner=document.getElementById('g1-match');const topVote=[...data.others].sort((a,b)=>b.voters.length-a.voters.length)[0].label;const isMatch=data.self===topVote;const isFemale=['Sissy','Ana','Marcela'].includes(currentPerson);banner.textContent=isMatch?`Self-aware ${isFemale?'queen':'king'}. The squad and ${currentPerson} are perfectly aligned on this one.`:`The squad disagrees. They voted "${topVote}" but ${currentPerson} voted themselves for "${data.self}". Beautiful.`;banner.classList.add('visible',isMatch?'yes':'no');setTimeout(()=>{document.getElementById('g1-next').classList.add('visible');document.getElementById('g1-round').scrollTop=9999;},500);},600);});
+  document.getElementById('g1-next').addEventListener('click',()=>{done.add(currentPerson);if(done.size===squad.length)showG1('g1-done');else{buildLobby();showG1('g1-lobby');}});
+  document.getElementById('g1-restart').addEventListener('click',()=>{done.clear();buildLobby();showG1('g1-lobby');});
+  buildLobby();
+})();
+
+(function() {
+  const QUOTES={Dimitrios:{q22:{text:'The feeling of freedom and happiness',owner:'Dimitrios'},q23:{text:'Candy readiness',owner:'Dimitrios'}},Sissy:{q22:{text:"Tomorrowland's vibe",owner:'Sissy'},q23:{text:'Leaving my dog behind and heavy rain',owner:'Sissy'}},Ana:{q22:{text:'Vibes, music and design of the stages',owner:'Ana'},q23:{text:'Camping',owner:'Ana'}},Selim:{q22:{text:'Having a good time with good people',owner:'Selim'},q23:{text:'Not finding candy',owner:'Selim'}},Rodrigo:{q22:{text:'Meeting our crew!',owner:'Rodrigo'},q23:{text:'Being late for the festival',owner:'Rodrigo'}},Marcela:{q22:{text:'A new experience in my life',owner:'Marcela'},q23:{text:'Not sleeping',owner:'Marcela'}},Antonis:{q22:{text:'Watching the main stage be the main stage',owner:'Antonis'},q23:{text:'Weather :)',owner:'Antonis'}},Diego:{q22:{text:'Seeing the Tomorrowland 2025 team again!',owner:'Diego'},q23:{text:'Renting the tent for Marcela and I',owner:'Diego'}}};
+  const ASSIGN={q22:{Dimitrios:'Rodrigo',Sissy:'Marcela',Ana:'Dimitrios',Selim:'Sissy',Rodrigo:'Ana',Marcela:'Selim',Antonis:'Diego',Diego:'Antonis'},q23:{Dimitrios:'Marcela',Sissy:'Rodrigo',Ana:'Sissy',Selim:'Dimitrios',Rodrigo:'Diego',Marcela:'Antonis',Antonis:'Ana',Diego:'Selim'}};
+  const squad=Object.keys(QUOTES);const roundsDone={};squad.forEach(p=>roundsDone[p]=0);let currentPerson=null,currentRound=null,guessSelected=null,totalCorrect=0,totalPlayed=0;
+  function showG2(id){document.querySelectorAll('#view-game2 .gscreen,#view-game2 .gscreen-scroll').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+  function buildCards(){const grid=document.getElementById('g2-card-grid');grid.innerHTML='';squad.forEach(name=>{const done=roundsDone[name];const card=document.createElement('div');card.className='person-card'+(done===1?' half-done':'')+(done===2?' all-done':'');if(done===1){const b=document.createElement('div');b.className='pc-badge';card.appendChild(b);}card.innerHTML+=`<span class="pc-name">${name}</span><div class="pc-status">${done===0?'tap to flip':done===1?'1 of 2 done':'done'}</div>`;if(done<2)card.addEventListener('click',()=>startWsi(name));grid.appendChild(card);});}
+  function startWsi(name){currentPerson=name;guessSelected=null;currentRound=roundsDone[name]===0?'q22':'q23';const owner=ASSIGN[currentRound][name];const quote=QUOTES[owner][currentRound];const played=squad.reduce((a,p)=>a+roundsDone[p],0);document.getElementById('g2-progress').textContent=(played+1)+' of 16';document.getElementById('g2-name').innerHTML=`<span>${name}</span>`;document.getElementById('g2-prompt').textContent=currentRound==='q22'?`${name}, who said they're most excited about this?`:`${name}, who said they're lowkey nervous about this?`;document.getElementById('g2-quote-tag').textContent=currentRound==='q22'?'most excited about...':'lowkey nervous about...';document.getElementById('g2-quote-text').textContent=quote.text;const qc=document.getElementById('g2-quote-card');qc.classList.remove('visible');requestAnimationFrame(()=>requestAnimationFrame(()=>qc.classList.add('visible')));const cb=document.getElementById('g2-confirm');cb.disabled=true;cb.style.display='block';document.getElementById('g2-reveal').classList.remove('visible');document.getElementById('g2-result').classList.remove('visible','correct-banner','wrong-banner');document.getElementById('g2-next').classList.remove('visible');document.getElementById('g2-drum').style.display='block';const gg=document.getElementById('g2-guess-grid');gg.innerHTML='';squad.filter(p=>p!==name).forEach(p=>{const btn=document.createElement('button');btn.className='wsi-guess-btn';btn.textContent=p;btn.dataset.name=p;btn.addEventListener('click',()=>{gg.querySelectorAll('.wsi-guess-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');guessSelected=p;cb.disabled=false;});gg.appendChild(btn);});showG2('g2-round');document.getElementById('g2-round').scrollTop=0;}
+  document.getElementById('g2-confirm').addEventListener('click',()=>{document.getElementById('g2-confirm').style.display='none';document.getElementById('g2-guess-grid').querySelectorAll('.wsi-guess-btn').forEach(b=>{b.classList.add('disabled');if(b.dataset.name!==guessSelected)b.style.opacity='0.3';});document.getElementById('g2-reveal').classList.add('visible');document.getElementById('g2-round').scrollTop=9999;});
+  document.getElementById('g2-drum').addEventListener('click',()=>{document.getElementById('g2-drum').style.display='none';const owner=ASSIGN[currentRound][currentPerson];const isCorrect=guessSelected===owner;if(isCorrect)totalCorrect++;totalPlayed++;document.getElementById('g2-guess-grid').querySelectorAll('.wsi-guess-btn').forEach(b=>{if(b.dataset.name===owner)b.classList.add('reveal-correct');else if(b.dataset.name===guessSelected&&!isCorrect)b.classList.add('wrong');});const result=document.getElementById('g2-result');document.getElementById('g2-rb-big').textContent=isCorrect?'CORRECT!':'NOPE!';document.getElementById('g2-rb-text').textContent=isCorrect?`Yes! ${owner} said that. ${currentPerson} knows their squad.`:`That was ${owner}. ${currentPerson} guessed ${guessSelected} — not quite.`;result.classList.add('visible',isCorrect?'correct-banner':'wrong-banner');setTimeout(()=>{document.getElementById('g2-next').classList.add('visible');document.getElementById('g2-round').scrollTop=9999;},500);});
+  document.getElementById('g2-next').addEventListener('click',()=>{roundsDone[currentPerson]++;const allDone=squad.every(p=>roundsDone[p]===2);if(allDone){document.getElementById('g2-score').textContent=totalCorrect+' / '+totalPlayed+' correct';showG2('g2-done');}else{buildCards();showG2('g2-lobby');}});
+  document.getElementById('g2-restart').addEventListener('click',()=>{squad.forEach(p=>roundsDone[p]=0);totalCorrect=0;totalPlayed=0;buildCards();showG2('g2-lobby');});
+  buildCards();
+})();
+</script>
+</body>
 </html>
